@@ -1,4 +1,5 @@
 import { leerJSON, guardarEnJSON } from "./file-editer.js"
+import { list, list_done, list_todo, list_in_progress } from "./listers.js"
 
 function add() {
     // Validamos que exista la tarea
@@ -83,28 +84,57 @@ function update() {
 }
 
 function mark_in_progress() {
-    
+    if (!process.argv[3]) {
+        console.log("Error en ingreso de argumentos");
+        console.log("Debe ingresar el id de su tarea");
+        console.log("Intente con: node task-cli mark-in-progress <id>");
+        process.exit(1);
+    }
+
+    const contenido = leerJSON();
+    const idUpdate = contenido.findIndex(elemento => elemento.id === parseInt(process.argv[3]));
+
+    if (idUpdate !== -1) {
+        contenido[idUpdate].status = "in-progress";
+
+        let fechaActualizacion = new Date();
+        fechaActualizacion = fechaActualizacion.toDateString();
+        contenido[idUpdate].updateAt = fechaActualizacion;
+
+        guardarEnJSON(contenido);
+
+        console.log("Task updated with success");
+    } else {
+        console.log("La tarea no se encuentra registrada, verfique ID");
+        process.exit(1);
+    }
 }
 
 function mark_done() {
-    
-}
+    if (!process.argv[3]) {
+        console.log("Error en ingreso de argumentos");
+        console.log("Debe ingresar el id de su tarea");
+        console.log("Intente con: node task-cli mark-done <id>");
+        process.exit(1);
+    }
 
-function list() {
-    const data = leerJSON();
-    console.log(data)
-}
+    const contenido = leerJSON();
+    const idUpdate = contenido.findIndex(elemento => elemento.id === parseInt(process.argv[3]));
 
-function list_done() {
-    
-}
+    if (idUpdate !== -1) {
+        contenido[idUpdate].status = "done";
 
-function list_todo() {
-    
-}
+        let fechaActualizacion = new Date();
+        fechaActualizacion = fechaActualizacion.toDateString();
+        contenido[idUpdate].updateAt = fechaActualizacion;
 
-function list_in_progress() {
-    
+        guardarEnJSON(contenido);
+
+        console.log("Task updated with success");
+    } else {
+        console.log("La tarea no se encuentra registrada, verfique ID");
+        process.exit(1);
+    }
 }
 
 function main() {
