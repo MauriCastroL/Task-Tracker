@@ -19,6 +19,6 @@ export function list_todo() {
 
 export function list_in_progress() {
     const data = leerJSON();
-    const listInProgress = data.filter(elemento => elemento.status === "todo");
+    const listInProgress = data.filter(elemento => elemento.status === "in-progress");
     console.table(listInProgress);
 }

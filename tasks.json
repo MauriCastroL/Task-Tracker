@@ -1,14 +1,14 @@
 [
   {
-    "id": 1766523849539,
-    "description": "Prueba inicial",
-    "status": "in-progress",
+    "id": 1766525828880,
+    "description": "tarea",
+    "status": "todo",
     "createdAt": "Tue Dec 23 2025",
     "updateAt": "Tue Dec 23 2025"
   },
   {
-    "id": 1766525061403,
-    "description": "Soy un hacker",
+    "id": 1766525840575,
+    "description": "comer",
     "status": "todo",
     "createdAt": "Tue Dec 23 2025",
     "updateAt": "Tue Dec 23 2025"

@@ -12,8 +12,7 @@ export function leerJSON() {
         }
         }
     catch (error) {
-        console.log(error);
-        process.exit(1);
+        return []
     }
 }
 
