@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { leerJSON, guardarEnJSON } from "./file-editer.js"
 import { list, list_done, list_todo, list_in_progress } from "./listers.js"
 
