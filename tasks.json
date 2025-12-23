@@ -5,5 +5,12 @@
     "status": "in-progress",
     "createdAt": "Tue Dec 23 2025",
     "updateAt": "Tue Dec 23 2025"
+  },
+  {
+    "id": 1766525061403,
+    "description": "Soy un hacker",
+    "status": "todo",
+    "createdAt": "Tue Dec 23 2025",
+    "updateAt": "Tue Dec 23 2025"
   }
 ]

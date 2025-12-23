@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Mi CLI de tareas",
   "main": "task-cli.js",
+  "type": "module",  
+  "bin": {           
+    "task-cli": "./task-cli.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
