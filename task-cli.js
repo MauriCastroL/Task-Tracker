@@ -3,10 +3,9 @@ import { list, list_done, list_todo, list_in_progress } from "./listers.js"
 
 function add() {
     // Validamos que exista la tarea
-    if (!process.argv[3]) {
+    if (!process.argv[3] || process.argv[3].trim() === "" || process.argv.length > 4) {
         console.log("Error en ingreso de argumentos");
-        console.log("Debe ingresar el nombre de su tarea");
-        console.log("Intente con: node task-cli add <nombre-tarea>");
+        console.log("Intente con: node task-cli add <'nombre-tarea'>");
         process.exit(1);
     }  
 
@@ -36,9 +35,10 @@ function add() {
 
 function deleteTask() {
     const contenidoJSON = leerJSON();
-    if (!process.argv[3]) {
+    
+    // Verificamos que se ingrese el ID
+    if (!process.argv[3] || process.argv.length > 4) {
         console.log("Error en ingreso de argumentos");
-        console.log("Debe ingresar el ID de su tarea");
         console.log("Intente con: node task-cli delete <ID>");
         process.exit(1);
     }
@@ -65,48 +65,62 @@ function update() {
 
     // Obtenemos el JSON y la tarea con el ID
     const contenido = leerJSON();
-    const idUpdate = parseInt(process.argv[3]); // VERIFICAR ENTRADA
+    const idUpdate = Number(process.argv[3]); 
 
-    const indexUpdate = contenido.findIndex(elemento => elemento.id === idUpdate);
-    if (indexUpdate !== -1) {
-        contenido[indexUpdate].description = process.argv[4];
+    if (!isNaN(idUpdate)) {
+        // Capturamos el indice del objeto a modificar
+        const indexUpdate = contenido.findIndex(elemento => elemento.id === idUpdate);
 
-        let fechaActualizacion = new Date();
-        fechaActualizacion = fechaActualizacion.toDateString();
-        contenido[indexUpdate].updateAt = fechaActualizacion;
-        guardarEnJSON(contenido);
-        console.log("Task updated with success");
+        if (indexUpdate !== -1) {
+            contenido[indexUpdate].description = process.argv[4];
 
+            let fechaActualizacion = new Date();
+            fechaActualizacion = fechaActualizacion.toDateString();
+            contenido[indexUpdate].updateAt = fechaActualizacion;
+            guardarEnJSON(contenido);
+
+            console.log("Task updated with success");
+
+        } else {
+            console.log("No existe una tarea con ese ID");
+            process.exit(1);
+        }
     } else {
-        console.log("No existe una tarea con ese ID");
-        process.exit(1);
+        console.log("Debe ingresar un ID númerico no un string");
     }
 }
 
 function mark_in_progress() {
-    if (!process.argv[3]) {
+    // Validaciones de entrada
+    if (!process.argv[3] || process.argv.length > 4) {
         console.log("Error en ingreso de argumentos");
-        console.log("Debe ingresar el id de su tarea");
         console.log("Intente con: node task-cli mark-in-progress <id>");
         process.exit(1);
     }
 
     const contenido = leerJSON();
-    const idUpdate = contenido.findIndex(elemento => elemento.id === parseInt(process.argv[3]));
+    const arg = Number(process.argv[3]); 
 
-    if (idUpdate !== -1) {
-        contenido[idUpdate].status = "in-progress";
+    // Verificamos si a entrada es valida
+    if (!isNaN(arg)) {
+        const idToUpdate = contenido.findIndex(elemento => elemento.id === arg);
 
-        let fechaActualizacion = new Date();
-        fechaActualizacion = fechaActualizacion.toDateString();
-        contenido[idUpdate].updateAt = fechaActualizacion;
+        if (idToUpdate !== -1) {
+            contenido[idToUpdate].status = "in-progress";
 
-        guardarEnJSON(contenido);
+            let fechaActualizacion = new Date();
+            fechaActualizacion = fechaActualizacion.toDateString();
+            contenido[idToUpdate].updateAt = fechaActualizacion;
 
-        console.log("Task updated with success");
+            guardarEnJSON(contenido);
+
+            console.log("Task updated with success");
+        } else {
+            console.log("La tarea no se encuentra registrada, verfique ID");
+            process.exit(1);
+        }
     } else {
-        console.log("La tarea no se encuentra registrada, verfique ID");
-        process.exit(1);
+        console.log("Debe ingresar un ID númerico no un string");
     }
 }
 
@@ -119,21 +133,27 @@ function mark_done() {
     }
 
     const contenido = leerJSON();
-    const idUpdate = contenido.findIndex(elemento => elemento.id === parseInt(process.argv[3]));
+    const arg = Number(process.argv[3]);
 
-    if (idUpdate !== -1) {
-        contenido[idUpdate].status = "done";
+    if (!isNaN(arg)) {
+        const idUpdate = contenido.findIndex(elemento => elemento.id === arg);
 
-        let fechaActualizacion = new Date();
-        fechaActualizacion = fechaActualizacion.toDateString();
-        contenido[idUpdate].updateAt = fechaActualizacion;
+        if (idUpdate !== -1) {
+            contenido[idUpdate].status = "done";
 
-        guardarEnJSON(contenido);
+            let fechaActualizacion = new Date();
+            fechaActualizacion = fechaActualizacion.toDateString();
+            contenido[idUpdate].updateAt = fechaActualizacion;
 
-        console.log("Task updated with success");
+            guardarEnJSON(contenido);
+
+            console.log("Task updated with success");
+        } else {
+            console.log("La tarea no se encuentra registrada, verfique ID");
+            process.exit(1);
+        }
     } else {
-        console.log("La tarea no se encuentra registrada, verfique ID");
-        process.exit(1);
+        console.log("Debe ingresar un ID númerico no un string");
     }
 }
 
@@ -190,6 +210,7 @@ function main() {
 
                 break;
             default:
+                console.log("Error de argumento")
                 break;
         }
     }
