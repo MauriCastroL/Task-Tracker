@@ -1,6 +1,4 @@
-import console from 'console';
-import fs from 'fs';
-import { type } from 'os';
+import { leerJSON, guardarEnJSON } from "./file-editer.js"
 
 function add() {
     // Validamos que exista la tarea
@@ -11,55 +9,29 @@ function add() {
         process.exit(1);
     }  
 
-    let data = leerJSON(); // Arreglo con objetos
+    // Leemos la persistencia de los datos 
+    let data = leerJSON(); 
 
     // Obtenemos la fecha de la creación
     let fechaCreacion = new Date();
     fechaCreacion = fechaCreacion.toDateString();
     const id = Date.now();
 
+    // Creamos el objeto
     const task = {
-        "id": id,
-        "description": process.argv[3],
-        "status": "todo",
-        "createdAt": fechaCreacion,
-        "updateAt": fechaCreacion
-        }
+        id: id,
+        description: process.argv[3],
+        status: "todo",
+        createdAt: fechaCreacion,
+        updateAt: fechaCreacion
+    }
 
+    // Insertamos la nueva tarea
     data.push(task);
     guardarEnJSON(data);
     console.log(`Task added successfully (ID: ${task.id})`);
-
 }
 
-
-function leerJSON() {
-    try {
-        const data = fs.readFileSync('tasks.json').toString();
-        if (data) {
-            const contenido = JSON.parse(data);     
-            return contenido;
-        } else {
-            return [];
-        }
-        }
-    catch (error) {
-        console.log(error);
-        process.exit(1);
-    }
-}
-
-function guardarEnJSON(task) {
-    // Guardamos la info en el JSON junto al directorio de task-cli
-    try {
-        const data = JSON.stringify(task, null, 2);
-        fs.writeFileSync('tasks.json', data);
-        
-    } catch (error) {
-        console.log(error);
-        process.exit(1);
-    }
-}
 
 function deleteTask() {
     const contenidoJSON = leerJSON();
@@ -91,14 +63,23 @@ function update() {
     }
 
     // Obtenemos el JSON y la tarea con el ID
+    const contenido = leerJSON();
+    const idUpdate = parseInt(process.argv[3]); // VERIFICAR ENTRADA
 
-    let fechaActualizacion = new Date();
-    fechaActualizacion = fechaActualizacion.toDateString();
+    const indexUpdate = contenido.findIndex(elemento => elemento.id === idUpdate);
+    if (indexUpdate !== -1) {
+        contenido[indexUpdate].description = process.argv[4];
 
-    // Cambiamos la fecha de actualización 
-    // task.updateAt = fechaActualizacion; DESCOMENTAR
+        let fechaActualizacion = new Date();
+        fechaActualizacion = fechaActualizacion.toDateString();
+        contenido[indexUpdate].updateAt = fechaActualizacion;
+        guardarEnJSON(contenido);
+        console.log("Task updated with success");
 
-    
+    } else {
+        console.log("No existe una tarea con ese ID");
+        process.exit(1);
+    }
 }
 
 function mark_in_progress() {
