@@ -1,15 +1,8 @@
 [
   {
-    "id": 1766502061633,
-    "description": "comer",
+    "id": 1766523849539,
+    "description": "Prueba inicial",
     "status": "in-progress",
-    "createdAt": "Tue Dec 23 2025",
-    "updateAt": "Tue Dec 23 2025"
-  },
-  {
-    "id": 1766523539011,
-    "description": "sol",
-    "status": "todo",
     "createdAt": "Tue Dec 23 2025",
     "updateAt": "Tue Dec 23 2025"
   }

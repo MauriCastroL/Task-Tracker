@@ -43,11 +43,18 @@ function deleteTask() {
         process.exit(1);
     }
 
-    let idAEliminar = parseInt(process.argv[3]);
-    let indice = contenidoJSON.findIndex(user => user.id === idAEliminar);
+    let idAEliminar = Number(process.argv[3]);
 
-    if (indice !== -1) { 
-        contenidoJSON.splice(indice, 1); 
+    if (!isNaN(idAEliminar)) {
+        const indice = contenidoJSON.findIndex(user => user.id === idAEliminar);
+        if (indice !== -1) { 
+            contenidoJSON.splice(indice, 1); 
+        } else {
+            console.log("La tarea no se encuentra registrada");
+        }
+
+    } else {
+        console.log(process.argv[3] + " No es un ID valido");
     }
 
     guardarEnJSON(contenidoJSON);
