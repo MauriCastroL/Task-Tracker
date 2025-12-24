@@ -1,16 +1,23 @@
 [
   {
-    "id": 1766525828880,
-    "description": "tarea",
-    "status": "todo",
-    "createdAt": "Tue Dec 23 2025",
-    "updateAt": "Tue Dec 23 2025"
+    "id": 1766545565559,
+    "description": "Grabar readme.md",
+    "status": "in-progress",
+    "createdAt": "Wed Dec 24 2025",
+    "updateAt": "Wed Dec 24 2025"
   },
   {
-    "id": 1766525840575,
-    "description": "comer",
+    "id": 1766545572002,
+    "description": "Arreglar bugs",
     "status": "todo",
-    "createdAt": "Tue Dec 23 2025",
-    "updateAt": "Tue Dec 23 2025"
+    "createdAt": "Wed Dec 24 2025",
+    "updateAt": "Wed Dec 24 2025"
+  },
+  {
+    "id": 1766546350427,
+    "description": "Terminar el README del proyecto",
+    "status": "in-progress",
+    "createdAt": "Wed Dec 24 2025",
+    "updateAt": "Wed Dec 24 2025"
   }
 ]
