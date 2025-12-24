@@ -1,5 +1,9 @@
 # 🚀 Task Tracker CLI
 
+<p align="center">
+  <img src="./assets/casos_uso.gif" alt="Task Tracker CLI Demo" width="700">
+</p>
+
 Una herramienta de línea de comandos (CLI) simple, rápida y eficiente para gestionar tus tareas diarias sin salir de la terminal. Desarrollada en **Node.js** puro, sin dependencias pesadas.
 
 ## 📋 Características
